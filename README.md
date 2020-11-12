@@ -109,6 +109,10 @@ This project follows scalable project structure and RESTful best practices.
 - A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side.
 - The solution to this is to enable the redis based token blacklist. Using the environment variable `REDIS_BLACKLIST_ENABLED` you can turn it on and off. You will need to set up the redis cluster before running any commands or revoking tokens.
 
+### Versioning
+- If you want to version this API, then I would advise placing `controllers`, `services` and `routes` into a folder named v1. Those are the most likely to change between versions. 
+- You then change the test files and related accordingly.
+
 
   
 
