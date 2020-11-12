@@ -11,16 +11,15 @@ Or get straight to the action in an online API GUI here (courtesy of Swagger UI)
 Or view the project github here: [restful-typescript-koa](https://github.com/emmanuelnk/restful-typescript-koa)   
 
 ### What it has
-- Node.js (v12.x.x)
+- Node.js (v14.x.x)
 - NPM (v6.x.x) 
 - Typescript
 - KOA Framework v2
 - MongoDB 4 with TypeORM
+- Redis (Invalidating Authentication Tokens | Optional)
 - Winston (logging)
 - Swagger-UI (documenting the API)
 - Mocha, Chai, Supertest (unit and integration tests)
-- NYC (code coverage)
-- ESlint, Prettier (code formatting)
 - AJV for Schema validation
 
 ## Setup
@@ -42,6 +41,11 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
 - OPTIONAL: start the mongodb container in docker:
   ```bash
   sudo docker-compose -f mongo.docker-compose up -d
+  ```
+
+- OPTIONAL: start the redis container in docker:
+  ```bash
+  sudo docker-compose -f redis.docker-compose up -d
   ```
 ### Start
 
@@ -75,13 +79,18 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
 - The entry point for the server is `src/server.ts`
 - Program flow: `server` --> `routes` --> `Services --> ` `controllers` --> `Entities`
 - `Entities` are defined with and validated by TypeORM
+- Custom Middlewares are in the `src/middleware` folder
+- Database connection functions are in `src/providers/connections`
+- Schemas for modelling and validation are in `src/schemas`
+- Functions used in other parts of the program are in `src/libraries`
+- Custom Interfaces for Typescript Types are in `src/interfaces` 
 - Tests are in the `test` folder
 
 ### API Design
 This project follows scalable project structure and RESTful best practices.
 
 - The `routes` call controllers
-- The `controllers` choose what services to call. No business logic goes here
+- The `controllers` choose what `services` to execute. No business logic goes in the `controllers`
 - The `services` handle the business logic as well as database layer access.
 - `entites` contain the entity models for database access
   
@@ -94,11 +103,11 @@ This project follows scalable project structure and RESTful best practices.
 - Tests are run against test databases on local and a test database docker container when in CI (Github Actions)
 
 ### Authentication/Authorization
-- Authentication is implemented using a jwt access and refresh token system. When a user logs in they are given a short term access token with which to perform authenticated requests. When this toek expires they can access the `/refresh` endpoint to get another one. The refresh token is stored in the database. 
+- Authentication is implemented using a jwt access and refresh token system. When a user logs in they are given a short term access token with which to perform authenticated requests. When this token expires they can access the `/refresh` endpoint to get another one. The refresh token is stored in the database. 
 - The refresh token should expire after a very long time and thus allow the user to maintain a sliding session until the refresh token expires or the refresh token is invalidated.
-- This method allows for multiple device login for an api
-- A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side
-- A solution to this would be to implement a token blacklist in a redis datastore that checks invalidated tokens on user access to authenticated routes. This is however resource intensive.
+- This method can allow for multiple device login for an api.
+- A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side.
+- The solution to this is to enable the redis based token blacklist. Using the environment variable `REDIS_BLACKLIST_ENABLED` you can turn it on and off. You will need to set up the redis cluster before running any commands or revoking tokens.
 
 
   
