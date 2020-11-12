@@ -1,0 +1,61 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "jsdoc"],
+    "extends": [   
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:unicorn/recommended",
+        "prettier",
+        "prettier/@typescript-eslint",
+        "plugin:jsdoc/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "rules": {
+        "quotes": ["error", "single"],
+        "unicorn/prevent-abbreviations": "off",
+        "unicorn/no-fn-reference-in-iterator": "off", 
+        "padding-line-between-statements": [
+            2,
+            { "blankLine": "always", "prev": "directive", "next": "*" },
+            { "blankLine": "any", "prev": "directive", "next": "directive" },
+            { "blankLine": "always", "prev": "import", "next": "*" },
+            { "blankLine": "any", "prev": "import", "next": "import" },
+            { "blankLine": "always", "prev": "*", "next": ["const", "let", "var", "export"] },
+            { "blankLine": "always", "prev": ["const", "let", "var", "export"], "next": "*" },
+            {
+                "blankLine": "any",
+                "prev": ["const", "let", "var", "export"],
+                "next": ["const", "let", "var", "export"]
+            },
+            { "blankLine": "always", "prev": "*", "next": ["if", "class", "for", "do", "while", "switch", "try"] },
+            { "blankLine": "always", "prev": ["if", "class", "for", "do", "while", "switch", "try"], "next": "*" },
+            { "blankLine": "always", "prev": "*", "next": "return" }
+        ],
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+                "multiline": {
+                    "delimiter": "none", // 'none' or 'semi' or 'comma'
+                    "requireLast": true
+                },
+                "singleline": {
+                    "delimiter": "semi", // 'semi' or 'comma'
+                    "requireLast": false
+                }
+            }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": 1,
+        "@typescript-eslint/no-inferrable-types": [
+            "warn",
+            {
+                "ignoreParameters": true
+            }
+        ],
+        "@typescript-eslint/no-unused-vars": "warn"
+    }
+}

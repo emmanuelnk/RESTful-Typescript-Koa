@@ -1,0 +1,93 @@
+<h1 id="restful-typescript-koa">RESTful-Typescript-Koa</h1>
+<p>👷🏿 by <a href="https://www.github.com/emmanuelnk">Emmanuel N K</a> </p>
+<h2 id="introduction">Introduction</h2>
+<p>This project is a simple RESTful API built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  </p>
+<p>Check out the project homepage here: <a href="https://restful-typescript-koa.herokuapp.com">restful-typescript-koa</a><br>Or get straight to the action in an online API GUI here (courtesy of Swagger UI): <a href="https://restful-typescript-koa.herokuapp.com/swagger-html">restful-typescript-koa/swagger-html</a><br>Or view the project github here: <a href="https://github.com/emmanuelnk/restful-typescript-koa">restful-typescript-koa</a>   </p>
+<h3 id="what-it-has">What it has</h3>
+<ul>
+<li>Node.js (v12.x.x)</li>
+<li>NPM (v6.x.x) </li>
+<li>Typescript</li>
+<li>KOA Framework v2</li>
+<li>MongoDB 4 with TypeORM</li>
+<li>Winston (logging)</li>
+<li>Swagger-UI (documenting the API)</li>
+<li>Mocha, Chai, Supertest (unit and integration tests)</li>
+<li>NYC (code coverage)</li>
+<li>ESlint, Prettier (code formatting)</li>
+<li>AJV for Schema validation</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>Node.js version &gt;= 12</li>
+<li>npm version &gt;= 6</li>
+<li>docker and docker-compose (to run the mongodb db in localhost)</li>
+</ul>
+<h3 id="setup-1">Setup</h3>
+<ul>
+<li><p>install dependencies:</p>
+<pre><code class="language-bash">npm install</code></pre>
+</li>
+<li><p>OPTIONAL: setup the <code>.env</code> file. Edit the environment variables inside accordingly:</p>
+<pre><code class="language-bash">cp .env.example .env</code></pre>
+</li>
+<li><p>OPTIONAL: start the mongodb container in docker:</p>
+<pre><code class="language-bash">sudo docker-compose -f mongo.docker-compose up -d</code></pre>
+<h3 id="start">Start</h3>
+</li>
+<li><p>for development:</p>
+<pre><code class="language-bash">npm run watch-server</code></pre>
+</li>
+<li><p>for deployment on local host:</p>
+<pre><code class="language-bash">npm run build
+npm start</code></pre>
+<h3 id="test">Test</h3>
+</li>
+<li><p>to run tests:</p>
+<pre><code class="language-bash">npm test</code></pre>
+<h3 id="coverage">Coverage</h3>
+</li>
+<li><p>to run code coverage:</p>
+<pre><code class="language-bash">npm run coverage</code></pre>
+</li>
+</ul>
+<h3 id="deployment">Deployment</h3>
+<ul>
+<li>Project is deployed via Github Actions to Heroku using a <code>ci.yml</code> file in the project</li>
+</ul>
+<h2 id="design">Design</h2>
+<h2 id="project-file-structure">Project File Structure</h2>
+<ul>
+<li>The project is written in Typescript. After Typescript compiles, all subsequently built javascript files are in <code>/dist</code></li>
+<li>The entry point for the server is <code>src/server.ts</code></li>
+<li>Program flow: <code>server</code> --&gt; <code>routes</code> --&gt; <code>Services --&gt; </code> <code>controllers</code> --&gt; <code>Entities</code></li>
+<li><code>Entities</code> are defined with and validated by TypeORM</li>
+<li>Tests are in the <code>test</code> folder</li>
+</ul>
+<h3 id="api-design">API Design</h3>
+<p>This project follows scalable project structure and RESTful best practices.</p>
+<ul>
+<li>The <code>routes</code> call controllers</li>
+<li>The <code>controllers</code> choose what services to call. No business logic goes here</li>
+<li>The <code>services</code> handle the business logic as well as database layer access.</li>
+<li><code>entites</code> contain the entity models for database access</li>
+</ul>
+<h3 id="rate-limiting">Rate Limiting</h3>
+<ul>
+<li>Rate limiting is implemented using koa middleware that keeps track of access in either an in-memory cache or redis datastore. </li>
+<li>Redis would be the preferred albeit expensive option for this scenario.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<ul>
+<li>This project concentrates on API integration tests and those are acheived using Mocha as a test runner, Chai for assertions and Supertest for accessing the server and making requests.</li>
+<li>Tests are run against test databases on local and a test database docker container when in CI (Github Actions)</li>
+</ul>
+<h3 id="authenticationauthorization">Authentication/Authorization</h3>
+<ul>
+<li>Authentication is implemented using a jwt access and refresh token system. When a user logs in they are given a short term access token with which to perform authenticated requests. When this toek expires they can access the <code>/refresh</code> endpoint to get another one. The refresh token is stored in the database. </li>
+<li>The refresh token should expire after a very long time and thus allow the user to maintain a sliding session until the refresh token expires or the refresh token is invalidated.</li>
+<li>This method allows for multiple device login for an api</li>
+<li>A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side</li>
+<li>A solution to this would be to implement a token blacklist in a redis datastore that checks invalidated tokens on user access to authenticated routes. This is however resource intensive.</li>
+</ul>
