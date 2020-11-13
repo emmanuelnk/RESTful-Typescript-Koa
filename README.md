@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This project is a simple RESTful API built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  
+This project is a simple RESTful API Template built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  
 
 Check out the project homepage here: [restful-typescript-koa](https://restful-typescript-koa.herokuapp.com)   
 Or get straight to the action in an online API GUI here (courtesy of Swagger UI): [restful-typescript-koa/swagger-html](https://restful-typescript-koa.herokuapp.com/swagger-html)    
@@ -30,6 +30,22 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
 - Swagger-UI (documenting the API)
 - Mocha, Chai, Supertest (unit and integration tests)
 - AJV for Schema validation
+
+### Available endpoints in this template
+- This is just a template to be used as a starter to develop more robust APIs
+- Keeps things simple by only handling authentication and CRUD operations for a user in the most RESTful way possible
+- Versioning is not opinionated in this project. Apply it as you see fit.
+- Available routes in this template are:
+- `GET /` - index route
+- `POST /login` - login (returns the access token to access protected routes)
+- `GET /refresh` - a route to get a new jwt access token when the old one expires
+- `GET /logout` - revoke access token (and optionally add it to redis blacklist)
+- `GET /users` - get all users
+- `POST /users` - create a new user
+- `GET /users/:id` - fetch a user
+- `PUT /users/:id` - update a user
+- `DELETE /users/:id` - delete a user
+- From these you can use the structure to build out other routes, controllers, services and entities.
 
 ## Setup
 
@@ -68,9 +84,13 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
   npm start
   ```
 ### Test
-- to run tests:
+- to run all tests:
   ```bash
   npm test
+  ```
+- to run one test:
+  ```bash
+  npm run test-one path/to/file.spec.ts
   ```
 ### Coverage
 - to run code coverage:
@@ -78,13 +98,14 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
   npm run coverage
   ```
 
-### Deployment
+### Build and Deployment
+- Project is built into a docker container and dpeloyed on Heroku
 - Project is deployed via Github Actions to Heroku Free Tier using a `ci.yml` file in the project
-- The example site uses Mongo Atlas Free Tier and Heroku Redis Free Tier
+- The example site uses Mongo Atlas Free Tier and Heroku Redis Free Tier add-on
 
 ## Design
 
-## Project File Structure
+### Project File Structure
 - The project is written in Typescript. After Typescript compiles, all subsequently built javascript files are in `/dist`
 - The entry point for the server is `src/server.ts`
 - Program flow: `server` --> `routes` --> `Services --> ` `controllers` --> `Entities`
@@ -122,6 +143,12 @@ This project follows scalable project structure and RESTful best practices.
 ### Versioning
 - If you want to version this API, then I would advise placing `controllers`, `services` and `routes` into a folder named `v1`. Those are the most likely to change between versions. 
 - You then change the related files accordingly.
+
+## Contributing
+- All contributions are welcomes
+- Open up an issue if you encounter any problems. Thanks
+
+
 
 
   

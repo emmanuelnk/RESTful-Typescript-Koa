@@ -1,8 +1,12 @@
 <h1 id="restful-typescript-koa">RESTful-Typescript-Koa</h1>
 <p>👷🏿 by <a href="https://www.github.com/emmanuelnk">Emmanuel N K</a> </p>
 <p><img src="https://user-images.githubusercontent.com/19330930/99025165-296f7780-25a3-11eb-8c38-e17cca2725df.jpg" alt="restful-typescript-koa-banner"></p>
+<p><a href="https://github.com/emmanuelnk/restful-typescript-koa/actions"><img src="https://github.com/emmanuelnk/restful-typescript-koa/workflows/build/badge.svg" alt="Actions Status"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+<a href="https://github.com/dwyl/esta/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions welcome"></a>
+<a href="https://twitter.com/emmanuel_n_k"><img src="https://img.shields.io/twitter/follow/emmanuel_n_k?style=social" alt="Twitter"></a></p>
 <h2 id="introduction">Introduction</h2>
-<p>This project is a simple RESTful API built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  </p>
+<p>This project is a simple RESTful API Template built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  </p>
 <p>Check out the project homepage here: <a href="https://restful-typescript-koa.herokuapp.com">restful-typescript-koa</a><br>Or get straight to the action in an online API GUI here (courtesy of Swagger UI): <a href="https://restful-typescript-koa.herokuapp.com/swagger-html">restful-typescript-koa/swagger-html</a><br>Or view the project github here: <a href="https://github.com/emmanuelnk/restful-typescript-koa">restful-typescript-koa</a>   </p>
 <h3 id="what-it-has">What it has</h3>
 <ul>
@@ -16,6 +20,23 @@
 <li>Swagger-UI (documenting the API)</li>
 <li>Mocha, Chai, Supertest (unit and integration tests)</li>
 <li>AJV for Schema validation</li>
+</ul>
+<h3 id="available-endpoints-in-this-template">Available endpoints in this template</h3>
+<ul>
+<li>This is just a template to be used as a starter to develop more robust APIs</li>
+<li>Keeps things simple by only handling authentication and CRUD operations for a user in the most RESTful way possible</li>
+<li>Versioning is not opinionated in this project. Apply it as you see fit.</li>
+<li>Available routes in this template are:</li>
+<li><code>GET /</code> - index route</li>
+<li><code>POST /login</code> - login (returns the access token to access protected routes)</li>
+<li><code>GET /refresh</code> - a route to get a new jwt access token when the old one expires</li>
+<li><code>GET /logout</code> - revoke access token (and optionally add it to redis blacklist)</li>
+<li><code>GET /users</code> - get all users</li>
+<li><code>POST /users</code> - create a new user</li>
+<li><code>GET /users/:id</code> - fetch a user</li>
+<li><code>PUT /users/:id</code> - update a user</li>
+<li><code>DELETE /users/:id</code> - delete a user</li>
+<li>From these you can use the structure to build out other routes, controllers, services and entities.</li>
 </ul>
 <h2 id="setup">Setup</h2>
 <h3 id="requirements">Requirements</h3>
@@ -47,20 +68,25 @@
 npm start</code></pre>
 <h3 id="test">Test</h3>
 </li>
-<li><p>to run tests:</p>
+<li><p>to run all tests:</p>
 <pre><code class="language-bash">npm test</code></pre>
+</li>
+<li><p>to run one test:</p>
+<pre><code class="language-bash">npm run test-one path/to/file.spec.ts</code></pre>
 <h3 id="coverage">Coverage</h3>
 </li>
 <li><p>to run code coverage:</p>
 <pre><code class="language-bash">npm run coverage</code></pre>
 </li>
 </ul>
-<h3 id="deployment">Deployment</h3>
+<h3 id="build-and-deployment">Build and Deployment</h3>
 <ul>
-<li>Project is deployed via Github Actions to Heroku using a <code>ci.yml</code> file in the project</li>
+<li>Project is built into a docker container and dpeloyed on Heroku</li>
+<li>Project is deployed via Github Actions to Heroku Free Tier using a <code>ci.yml</code> file in the project</li>
+<li>The example site uses Mongo Atlas Free Tier and Heroku Redis Free Tier add-on</li>
 </ul>
 <h2 id="design">Design</h2>
-<h2 id="project-file-structure">Project File Structure</h2>
+<h3 id="project-file-structure">Project File Structure</h3>
 <ul>
 <li>The project is written in Typescript. After Typescript compiles, all subsequently built javascript files are in <code>/dist</code></li>
 <li>The entry point for the server is <code>src/server.ts</code></li>
@@ -101,6 +127,11 @@ npm start</code></pre>
 </ul>
 <h3 id="versioning">Versioning</h3>
 <ul>
-<li>If you want to version this API, then I would advise placing <code>controllers</code>, <code>services</code> and <code>routes</code> into a folder named v1. Those are the most likely to change between versions. </li>
-<li>You then change the test files and related accordingly.</li>
+<li>If you want to version this API, then I would advise placing <code>controllers</code>, <code>services</code> and <code>routes</code> into a folder named <code>v1</code>. Those are the most likely to change between versions. </li>
+<li>You then change the related files accordingly.</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<ul>
+<li>All contributions are welcomes</li>
+<li>Open up an issue if you encounter any problems. Thanks</li>
 </ul>
