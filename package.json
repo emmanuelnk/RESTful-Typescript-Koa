@@ -11,7 +11,7 @@
     "start": "npm run node dist/server.js",
     "test": "cross-env NODE_ENV=test TS_NODE_FILES=true mocha --timeout 5000 --exit --require ts-node/register --colors 'test/**/*.spec.ts'",
     "test-one": "cross-env NODE_ENV=test TS_NODE_FILES=true mocha --timeout 5000 --exit --require ts-node/register --colors",
-    "lint": "tsc --noEmit && eslint \"**/*.ts\"",
+    "lint": "tsc --noEmit && eslint \"**/*.ts\" --quiet --fix",
     "lint-fix": "eslint \"**/*.ts\" --quiet --fix",
     "coverage": "nyc npm run test",
     "generate-index-page": "cat README.md | npx marked -o public/readme.html"
@@ -31,7 +31,8 @@
     "winston",
     "boilerplate",
     "typeORM",
-    "class-validator",
+    "mongo",
+    "ajv",
     "helmet",
     "sql",
     "api rest",

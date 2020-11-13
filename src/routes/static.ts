@@ -20,22 +20,17 @@ staticRouter.get('/', async context => send(context, context.path, {
 	maxAge: staticAge.oneYearMs,
 }))
 
-staticRouter.get('/readme.html', async context => send(context, context.path, { 
-    root: `${findRoot(__dirname)}${serveBase}`, 
-    immutable: true,
-	maxAge: staticAge.oneDayMs,
-}))
+const publicAssetRoutes = [
+    '/readme.html',
+    '/favicon.ico',
+    '/assets/'
+]
 
-staticRouter.get('/favicon.ico', async context => send(context, context.path, { 
-    root: `${findRoot(__dirname)}${serveBase}`, 
-    immutable: true,
-	maxAge: staticAge.oneDayMs,
-}))
-
-staticRouter.get('/assets/', async context => send(context, context.path, { 
-    root: `${findRoot(__dirname)}${serveBase}`, 
-    immutable: true,
-	maxAge: staticAge.oneDayMs,
-}))
+for(const route of publicAssetRoutes)
+    staticRouter.get(route, async context => send(context, context.path, { 
+        root: `${findRoot(__dirname)}${serveBase}`, 
+        immutable: true,
+        maxAge: staticAge.oneDayMs,
+    }))
 
 export { staticRouter }

@@ -2,6 +2,15 @@
 
 👷🏿 by [Emmanuel N K](https://www.github.com/emmanuelnk) 
 
+![restful-typescript-koa-banner](https://user-images.githubusercontent.com/19330930/99025165-296f7780-25a3-11eb-8c38-e17cca2725df.jpg)
+
+[![Actions Status](https://github.com/emmanuelnk/restful-typescript-koa/workflows/build/badge.svg)](https://github.com/emmanuelnk/restful-typescript-koa/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![Twitter](https://img.shields.io/twitter/follow/emmanuel_n_k?style=social)](https://twitter.com/emmanuel_n_k)
+
+
+
 ## Introduction
 
 This project is a simple RESTful API built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  
@@ -70,7 +79,8 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
   ```
 
 ### Deployment
-- Project is deployed via Github Actions to Heroku using a `ci.yml` file in the project
+- Project is deployed via Github Actions to Heroku Free Tier using a `ci.yml` file in the project
+- The example site uses Mongo Atlas Free Tier and Heroku Redis Free Tier
 
 ## Design
 
@@ -110,8 +120,8 @@ This project follows scalable project structure and RESTful best practices.
 - The solution to this is to enable the redis based token blacklist. Using the environment variable `REDIS_BLACKLIST_ENABLED` you can turn it on and off. You will need to set up the redis cluster before running any commands or revoking tokens.
 
 ### Versioning
-- If you want to version this API, then I would advise placing `controllers`, `services` and `routes` into a folder named v1. Those are the most likely to change between versions. 
-- You then change the test files and related accordingly.
+- If you want to version this API, then I would advise placing `controllers`, `services` and `routes` into a folder named `v1`. Those are the most likely to change between versions. 
+- You then change the related files accordingly.
 
 
   

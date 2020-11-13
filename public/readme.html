@@ -1,20 +1,20 @@
 <h1 id="restful-typescript-koa">RESTful-Typescript-Koa</h1>
 <p>👷🏿 by <a href="https://www.github.com/emmanuelnk">Emmanuel N K</a> </p>
+<p><img src="https://user-images.githubusercontent.com/19330930/99025165-296f7780-25a3-11eb-8c38-e17cca2725df.jpg" alt="restful-typescript-koa-banner"></p>
 <h2 id="introduction">Introduction</h2>
 <p>This project is a simple RESTful API built using NodeJS, KOA, Typescript and TypeORM as an ORM for MongoDB. Middleware uses JWT, CORS, Winston Logger. Swagger API docs are used to produce an api front-end.  </p>
 <p>Check out the project homepage here: <a href="https://restful-typescript-koa.herokuapp.com">restful-typescript-koa</a><br>Or get straight to the action in an online API GUI here (courtesy of Swagger UI): <a href="https://restful-typescript-koa.herokuapp.com/swagger-html">restful-typescript-koa/swagger-html</a><br>Or view the project github here: <a href="https://github.com/emmanuelnk/restful-typescript-koa">restful-typescript-koa</a>   </p>
 <h3 id="what-it-has">What it has</h3>
 <ul>
-<li>Node.js (v12.x.x)</li>
+<li>Node.js (v14.x.x)</li>
 <li>NPM (v6.x.x) </li>
 <li>Typescript</li>
 <li>KOA Framework v2</li>
 <li>MongoDB 4 with TypeORM</li>
+<li>Redis (Invalidating Authentication Tokens | Optional)</li>
 <li>Winston (logging)</li>
 <li>Swagger-UI (documenting the API)</li>
 <li>Mocha, Chai, Supertest (unit and integration tests)</li>
-<li>NYC (code coverage)</li>
-<li>ESlint, Prettier (code formatting)</li>
 <li>AJV for Schema validation</li>
 </ul>
 <h2 id="setup">Setup</h2>
@@ -34,6 +34,9 @@
 </li>
 <li><p>OPTIONAL: start the mongodb container in docker:</p>
 <pre><code class="language-bash">sudo docker-compose -f mongo.docker-compose up -d</code></pre>
+</li>
+<li><p>OPTIONAL: start the redis container in docker:</p>
+<pre><code class="language-bash">sudo docker-compose -f redis.docker-compose up -d</code></pre>
 <h3 id="start">Start</h3>
 </li>
 <li><p>for development:</p>
@@ -63,13 +66,18 @@ npm start</code></pre>
 <li>The entry point for the server is <code>src/server.ts</code></li>
 <li>Program flow: <code>server</code> --&gt; <code>routes</code> --&gt; <code>Services --&gt; </code> <code>controllers</code> --&gt; <code>Entities</code></li>
 <li><code>Entities</code> are defined with and validated by TypeORM</li>
+<li>Custom Middlewares are in the <code>src/middleware</code> folder</li>
+<li>Database connection functions are in <code>src/providers/connections</code></li>
+<li>Schemas for modelling and validation are in <code>src/schemas</code></li>
+<li>Functions used in other parts of the program are in <code>src/libraries</code></li>
+<li>Custom Interfaces for Typescript Types are in <code>src/interfaces</code> </li>
 <li>Tests are in the <code>test</code> folder</li>
 </ul>
 <h3 id="api-design">API Design</h3>
 <p>This project follows scalable project structure and RESTful best practices.</p>
 <ul>
 <li>The <code>routes</code> call controllers</li>
-<li>The <code>controllers</code> choose what services to call. No business logic goes here</li>
+<li>The <code>controllers</code> choose what <code>services</code> to execute. No business logic goes in the <code>controllers</code></li>
 <li>The <code>services</code> handle the business logic as well as database layer access.</li>
 <li><code>entites</code> contain the entity models for database access</li>
 </ul>
@@ -85,9 +93,14 @@ npm start</code></pre>
 </ul>
 <h3 id="authenticationauthorization">Authentication/Authorization</h3>
 <ul>
-<li>Authentication is implemented using a jwt access and refresh token system. When a user logs in they are given a short term access token with which to perform authenticated requests. When this toek expires they can access the <code>/refresh</code> endpoint to get another one. The refresh token is stored in the database. </li>
+<li>Authentication is implemented using a jwt access and refresh token system. When a user logs in they are given a short term access token with which to perform authenticated requests. When this token expires they can access the <code>/refresh</code> endpoint to get another one. The refresh token is stored in the database. </li>
 <li>The refresh token should expire after a very long time and thus allow the user to maintain a sliding session until the refresh token expires or the refresh token is invalidated.</li>
-<li>This method allows for multiple device login for an api</li>
-<li>A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side</li>
-<li>A solution to this would be to implement a token blacklist in a redis datastore that checks invalidated tokens on user access to authenticated routes. This is however resource intensive.</li>
+<li>This method can allow for multiple device login for an api.</li>
+<li>A drawback of this method is with explicit log out. When a user logs outs, the client deletes the old token but the token is still valid on the server side.</li>
+<li>The solution to this is to enable the redis based token blacklist. Using the environment variable <code>REDIS_BLACKLIST_ENABLED</code> you can turn it on and off. You will need to set up the redis cluster before running any commands or revoking tokens.</li>
+</ul>
+<h3 id="versioning">Versioning</h3>
+<ul>
+<li>If you want to version this API, then I would advise placing <code>controllers</code>, <code>services</code> and <code>routes</code> into a folder named v1. Those are the most likely to change between versions. </li>
+<li>You then change the test files and related accordingly.</li>
 </ul>

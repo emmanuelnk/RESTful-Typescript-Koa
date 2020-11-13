@@ -1,4 +1,4 @@
-name: CI
+name: build
 
 on:
   push:
@@ -20,8 +20,10 @@ jobs:
       run: npm ci
     - name: Building the project
       run: npm run build 
-    - name: Run docker compose
+    - name: Start Mongo Container
       run: docker-compose -f mongo.docker-compose.yml up -d
+    - name: Start Redis Container
+      run: docker-compose -f redis.docker-compose.yml up -d
     - name: Run `npm test`
       run: npm test
       env:
