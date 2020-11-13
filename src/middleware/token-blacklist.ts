@@ -3,10 +3,14 @@ import {blacklistConnection } from '../providers/connections'
 import { BlackList } from 'jwt-blacklist'
 import * as errors from '../libraries/errors' 
 import { logger } from '../libraries/logger'
+import { config } from '../config'
 
 let tokenBlacklist: BlackList | undefined
 
-;(async () => { tokenBlacklist = tokenBlacklist || await blacklistConnection() })()
+;(async () => { 
+  if(config.redis.blackListEnabled)
+    tokenBlacklist = tokenBlacklist || await blacklistConnection() 
+})()
 
 /**
  * Middleware to check if token has been revoked
