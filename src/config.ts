@@ -20,7 +20,7 @@ if(process.env.REDIS_URL) {
     const redisUrl = process.env.REDIS_URL
 
     redis.port = Number.parseInt(redisUrl.split(':').slice(3).join(''))
-    redis.host = redisUrl.split(':').slice(0,3).join(':')
+    redis.host = redisUrl.split(':').slice(2,3).join('')
 }
 
 const config: Config = {
