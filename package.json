@@ -8,7 +8,7 @@
     "build-ts": "tsc",
     "copy-static-assets": "ts-node copy-static-assets.ts",
     "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
-    "start": "npm run node dist/server.js",
+    "start": "node dist/server.js",
     "test": "cross-env NODE_ENV=test TS_NODE_FILES=true mocha --timeout 5000 --exit --require ts-node/register --colors 'test/**/*.spec.ts'",
     "test-one": "cross-env NODE_ENV=test TS_NODE_FILES=true mocha --timeout 5000 --exit --require ts-node/register --colors",
     "lint": "tsc --noEmit && eslint \"**/*.ts\" --quiet --fix",
