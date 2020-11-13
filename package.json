@@ -103,7 +103,7 @@
     "koa-jwt": "^3.6.0",
     "koa-ratelimit": "^4.2.1",
     "koa-send": "^5.0.1",
-    "koa-swagger-decorator": "^1.5.16",
+    "koa-swagger-decorator": "^1.7.3",
     "lodash": "^4.17.20",
     "marked": "^1.2.2",
     "mongodb": "^3.6.2",
