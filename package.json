@@ -97,7 +97,7 @@
     "find-root": "^1.1.0",
     "html-minifier": "^4.0.0",
     "jwt-blacklist": "^0.1.2",
-    "koa": "^2.11.0",
+    "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^5.2.0",
     "koa-jwt": "^3.6.0",
