@@ -108,7 +108,7 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
 ### Project File Structure
 - The project is written in Typescript. After Typescript compiles, all subsequently built javascript files are in `/dist`
 - The entry point for the server is `src/server.ts`
-- Program flow: `server` --> `routes` --> `Services --> ` `controllers` --> `Entities`
+- Program flow: `server` --> `routes` --> `controllers` --> `cervices` --> `entities`
 - `Entities` are defined with and validated by TypeORM
 - Custom Middlewares are in the `src/middleware` folder
 - Database connection functions are in `src/providers/connections`
@@ -120,9 +120,9 @@ Or view the project github here: [restful-typescript-koa](https://github.com/emm
 ### API Design
 This project follows scalable project structure and RESTful best practices.
 
-- The `routes` call controllers
-- The `controllers` choose what `services` to execute. No business logic goes in the `controllers`
-- The `services` handle the business logic as well as database layer access.
+- The `routes` call controllers.
+- The `controllers` choose what `services` to execute. No business logic goes in the `controllers`.
+- The `services` handle the business logic as well as database layer access via `entities`.
 - `entites` contain the entity models for database access
   
 ### Rate Limiting
